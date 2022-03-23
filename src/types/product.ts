@@ -4,7 +4,7 @@ type TProduct = {
   eans: string[];
   label: string;
   productFamily: string;
-  price: number | null;
+  prize: number | null;
   isActive: boolean;
 };
 

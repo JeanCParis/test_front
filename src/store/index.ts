@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex, { ActionTree, GetterTree, MutationTree, createLogger } from "vuex";
+import Vuex, { ActionTree, GetterTree, MutationTree } from "vuex";
 import axios from "axios";
 import { TProduct } from "@/types/product";
 
@@ -16,7 +16,7 @@ const state = () => ({
     eans: [],
     label: "",
     productFamily: "",
-    price: null,
+    prize: null,
     isActive: false,
   },
 });
@@ -34,8 +34,7 @@ const mutations: MutationTree<State> = {
 const actions: ActionTree<State, TProduct> = {
   getProductInfo: async ({ commit }, cug) => {
     await axios
-      .get(`http://localhost:3000/product/${cug}`, {
-      })
+      .get(`http://localhost:3000/product/${cug}`, {})
       .then((response) => {
         commit("setProduct", response.data);
       });
@@ -43,7 +42,6 @@ const actions: ActionTree<State, TProduct> = {
 };
 
 const store = new Vuex.Store({
-  plugins: [createLogger()],
   modules: {
     product: {
       state,
