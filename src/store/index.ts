@@ -1,15 +1,57 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex, { ActionTree, GetterTree, MutationTree, createLogger } from "vuex";
+import axios from "axios";
+import { TProduct } from "@/types/product";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
+interface State {
+  product: TProduct;
+}
+
+const state = () => ({
+  product: {
+    cui: "",
+    cug: "",
+    eans: [],
+    label: "",
+    productFamily: "",
+    price: null,
+    isActive: false,
   },
-  mutations: {
+});
+
+const getters: GetterTree<State, TProduct> = {
+  product: (state: State) => state.product,
+};
+
+const mutations: MutationTree<State> = {
+  setProduct(state: State, product: TProduct) {
+    state.product = product;
   },
-  actions: {
+};
+
+const actions: ActionTree<State, TProduct> = {
+  getProductInfo: async ({ commit }, cug) => {
+    await axios
+      .get(`http://localhost:3000/product/${cug}`, {
+      })
+      .then((response) => {
+        commit("setProduct", response.data);
+      });
   },
+};
+
+const store = new Vuex.Store({
+  plugins: [createLogger()],
   modules: {
-  }
-})
+    product: {
+      state,
+      getters,
+      mutations,
+      actions,
+    },
+  },
+});
+
+export default store;
