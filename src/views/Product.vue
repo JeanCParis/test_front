@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <v-card class="mb-5">
+    <v-card v-if="erreur" class="mb-5">
+      <v-card-text style="color: red; font-weight: bold"
+        >Produit non trouvé</v-card-text
+      >
+    </v-card>
+
+    <v-card v-else class="mb-5">
       <v-card-title>Information Produit</v-card-title>
 
       <v-card-text>CUI : {{ product.cui }}</v-card-text>
@@ -45,7 +51,10 @@ import { TProduct } from "@/types/product";
 @Component<Product>({})
 export default class Product extends Vue {
   public cug = "";
-  public erreur = "";
+
+  get erreur(): boolean {
+    return this.$store.getters.error;
+  }
 
   public addProduct(): void {
     this.$store.dispatch("getProductInfo", this.cug);
