@@ -17,7 +17,7 @@
       </v-card-text>
       <v-card-text>LIBELLE : {{ product.label }}</v-card-text>
       <v-card-text>FAMILLE : {{ product.productFamily }}</v-card-text>
-      <v-card-text>PRIX : {{ product.price }}</v-card-text>
+      <v-card-text>PRIX : {{ product.prize }}</v-card-text>
     </v-card>
 
     <h3>Rechercher les informations d'un produit</h3>
